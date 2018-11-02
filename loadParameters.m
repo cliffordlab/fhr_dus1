@@ -17,7 +17,7 @@ function FHRparams = loadParameters()
 
 
 
-%% 1. Path of recording
+%% 1. Path of recordings wav files
 
 FHRparams.pathRecording = 'Recordings/';          %Path of the folder containing the One doppler ultrasound segments
 

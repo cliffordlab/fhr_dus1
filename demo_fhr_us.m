@@ -20,7 +20,7 @@ totalRecordings = length(recordings); %Total number of recordings
 
 
 windowLength = 3.75; %Size DusSegment
-sliddingWindow = 0.25; %Sliding window
+sliddingWindow = 3.75; %Sliding window
 
 recordingsFHR = struct();
 

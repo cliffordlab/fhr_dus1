@@ -21,7 +21,7 @@ totalRecordings = length(recordings); %Total number of recordings
 
 
 windowLength = 3.75; %Size DusSegment
-sliddingWindow = 3.75; %Sliding window - DUS devices calculates FHR every 25 ms
+sliddingWindow = 0.25; %Sliding window - DUS devices calculates FHR every 25 ms
 
 for idxRecordings=1:totalRecordings
     

@@ -1,17 +1,61 @@
 %%
 %OVERVIEW
-%   This script test if the functions have been properly downloaded and
-%   set up
+%   This script tests if the functions in this repo run correctly 
+%   using two sample recordings, test1.wav and test2.wav in the
+%   subdirectory ../Recordings
+
+%   REFERENCE: 
+%   Camilo E. Valderrama, Lisa Stroux, Nasim Katebi, Elianna Paljug, 
+%   Faezeh Marzbanrad, Gari D. Clifford. An open source autocorrelation-based 
+%   method for fetal heart rate estimation from one-dimensional Doppler ultrasound, 
+%   Physiological Measurement, 2019 (In Press).
+%
+%	REPO:       
+%       https://github.com/cliffordlab/fhr_dus1
+%
+%   ORIGINAL SOURCE AND AUTHORS:     
+%       Written by Camilo E. Valderrama (cvalder@emory.com) on Nov, 08/2018.
+%       Dependent scripts written by various authors 
+%       (see functions for details)       
+%	
+%   LICENSE:    
+%   
+%   Copyright (c) 2018, CliffordLab
+%   All rights reserved.
+% 
+%   Redistribution and use in source and binary forms, with or without
+%   modification, are permitted provided that the following conditions are met:
+% 
+%   1. Redistributions of source code must retain the above copyright notice, this
+%    list of conditions and the following disclaimer.
+%   2. Redistributions in binary form must reproduce the above copyright notice,
+%    this list of conditions and the following disclaimer in the documentation
+%    and/or other materials provided with the distribution.
+% 
+%   THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+%   ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+%   WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+%   DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+%   ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+%   (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+%   LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+%   ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+%   (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+%   SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+% 
+%   The views and conclusions contained in the software and documentation are those
+%   of the authors and should not be interpreted as representing official policies,
+%   either expressed or implied, of the FHR estimation project.
 
 clc;clear; close all;
 
 
-%% Loading function parameters
+%% Load function parameters
 
 FHRparams = loadParameters();
 
 
-%% Estimating FHR from Ultrasound recordings
+%% Estimate FHR from Ultrasound recordings
 
 recordings = dir(strcat(FHRparams.pathRecording,'*wav'));   % Loading the wav files contained in the recording folder
 
@@ -100,7 +144,7 @@ while ischar(tline)
     FHR_local = recordingsFHR.(nameRecording).(strcat('w_',num2str(windowIdx))).FHR; %Local FHR
     
     %In case the window was able to be estimated, the difference between
-    %gold standard and local FHR is calcualted
+    %gold standard and local FHR is calculated
     if  ~isnan(FHR_gold)
         if ~isnan(FHR_local)
             %In case FHR is not NaN - FHR_local was able to be estimated
@@ -112,7 +156,7 @@ while ischar(tline)
     else
         if isnan(FHR_local)
             %If the gold standard was NaN, and the local FHR is also NaN, 
-            %there are not difference 
+            %there is no difference 
             recordingsFHR.(nameRecording).(strcat('w_',num2str(windowIdx))).diff = 0;
         else
             %One was NaN and the other not --error
@@ -148,19 +192,19 @@ for iRecordings=1:length(recordingsNames)
     %If it's larger - "Caution - significant difference with gold standard output - please check data or code are correct".
     
     if sumDifferences<=eps
-        score = "Exact match with gold standar output";
+        score = "Exact match with gold standard output";
     elseif sumDifferences<=1
         score = strcat("Negligible difference with the gold standard (",num2str(sumDifferences)," BPM)");
     else
-        score = "Caution - significant difference with gold standard output - please check data or code are correct";
+        score = "Caution - significant difference with gold standard output - please check data or code are correct and version of Matlab";
     end
     
     
     
     
     %Printing results for the recording
-    fprintf("Name recording: %s\n", recordingsNames{iRecordings} );
-    fprintf("Total difference along windows: %f bpm\n", sumDifferences);
+    fprintf("Name of recording: %s\n", recordingsNames{iRecordings} );
+    fprintf("Total difference along all windows: %f bpm\n", sumDifferences);
     fprintf("Score comparison: %s\n", score);
     fprintf("******************************************\n\n");
     

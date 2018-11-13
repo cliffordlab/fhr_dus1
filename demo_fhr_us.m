@@ -20,7 +20,7 @@ totalRecordings = length(recordings); %Total number of recordings
 
 
 windowLength = 3.75; %Size DusSegment
-sliddingWindow = 3.75; %Sliding window
+sliddingWindow = 0.25; %Sliding window
 
 recordingsFHR = struct();
 
@@ -102,10 +102,22 @@ while ischar(tline)
     %In case the window was able to be estimated, the difference between
     %gold standard and local FHR is calcualted
     if  ~isnan(FHR_gold)
-        recordingsFHR.(nameRecording).(strcat('w_',num2str(windowIdx))).diff = abs(FHR_gold -FHR_gold); %storing difference
+        if ~isnan(FHR_local)
+            %In case FHR is not NaN - FHR_local was able to be estimated
+            recordingsFHR.(nameRecording).(strcat('w_',num2str(windowIdx))).diff = abs(FHR_local -FHR_gold); %storing difference
+        else
+             %One was NaN and the other not --error
+             recordingsFHR.(nameRecording).(strcat('w_',num2str(windowIdx))).diff = 10;
+        end
     else
-        %If the gold standard was NaN, the window is not used for comparison
-        recordingsFHR.(nameRecording).(strcat('w_',num2str(windowIdx))).diff = 0;
+        if isnan(FHR_local)
+            %If the gold standard was NaN, and the local FHR is also NaN, 
+            %there are not difference 
+            recordingsFHR.(nameRecording).(strcat('w_',num2str(windowIdx))).diff = 0;
+        else
+            %One was NaN and the other not --error
+            recordingsFHR.(nameRecording).(strcat('w_',num2str(windowIdx))).diff = 10;
+        end
     end
     
     tline = fgetl(fid); %Next line
@@ -135,21 +147,21 @@ for iRecordings=1:length(recordingsNames)
     %If the difference is less than 1bpm per minute of data analyzed, output is "Negligible difference with the gold standard (X BPM)"
     %If it's larger - "Caution - significant difference with gold standard output - please check data or code are correct".
     
-    if sumDifferences==0
+    if sumDifferences<=eps
         score = "Exact match with gold standar output";
     elseif sumDifferences<=1
         score = strcat("Negligible difference with the gold standard (",num2str(sumDifferences)," BPM)");
     else
         score = "Caution - significant difference with gold standard output - please check data or code are correct";
     end
-       
+    
     
     
     
     %Printing results for the recording
     fprintf("Name recording: %s\n", recordingsNames{iRecordings} );
     fprintf("Total difference along windows: %f bpm\n", sumDifferences);
-    fprintf("Score comparison: %s Hz\n", score);
+    fprintf("Score comparison: %s\n", score);
     fprintf("******************************************\n\n");
     
 end

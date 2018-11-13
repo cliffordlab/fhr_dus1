@@ -7,9 +7,6 @@
 clc;clear; close all;
 
 
-
-
-
 %% Loading function parameters
 
 FHRparams = loadParameters();
@@ -24,7 +21,7 @@ totalRecordings = length(recordings); %Total number of recordings
 
 
 windowLength = 3.75; %Size DusSegment
-sliddingWindow = 0.25; %Sliding window - DUS devices calculates FHR every 25 ms
+sliddingWindow = 3.75; %Sliding window - DUS devices calculates FHR every 25 ms
 
 for idxRecordings=1:totalRecordings
     
@@ -72,8 +69,7 @@ for idxRecordings=1:totalRecordings
         endSegment = endSegment+shiftWindow;
         startSegment = endSegment-dusSegmentSize+1;
         
-
-            
+  
         % Updating window index
         windowIdx = windowIdx+1;
     end

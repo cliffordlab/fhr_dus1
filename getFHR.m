@@ -83,7 +83,7 @@ max_index = round(maxPeriod*Fs); % turning maxPeriod into samples
 
 %% Selecting the peak correspoding the period
 
-%Validating there are peaks withing the window search
+%Validating there are peaks within the window search
 if ~isempty(locs)
     if length(peaks)>1
         
@@ -93,7 +93,7 @@ if ~isempty(locs)
         perX = (min_index+locs(1)-1)/(min_index+locs(2)-1);
         
         if perX>=0.48 && perX<=.52
-            %it is likely be an harmonic; therefore, the first peak is
+            %it is likely be a harmonic; therefore, the first peak is
             %taken
             index = locs(1);
         else
@@ -111,7 +111,7 @@ if ~isempty(locs)
                 index = locs(idxMaxPk);
                 
             else % If the amplitude of the peaks are postive
-                % (or negative, which usually does not happened as Matlab
+                % (or negative, which usually does not happen as Matlab
                 %  findPeaks function takes the biggest peaks of the auto
                 %  function, which at least has a positive amplitude peak for
                 %  periodic signlas, such as Doppler ultrasound signals. )
@@ -136,7 +136,7 @@ if ~isempty(locs)
     true_index = index+min_index-1;         %Adding starting of the window search
     
     %Estimating automatic FRH as the reciprocal of the DUS periodicity
-    %true_index variable is the period of the DUS singals in samples, it is
+    %true_index variable is the period of the DUS signals in samples, it is
     %converted to seconds by dividing it with the sampling frequency.
     %60 divided intro the period gives the frequency of the DUS signal in Hz
     heartRate = 60/(true_index/Fs);

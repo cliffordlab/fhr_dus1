@@ -32,14 +32,7 @@ function [despiked_signal] = schmidt_spike_removal(original_signal, fs)
 %	REPO:       
 %       https://github.com/cliffordlab/fhr_dus1
 %   ORIGINAL SOURCE AND AUTHORS:     
-%       This code is derived from the paper:
-%       S. E. Schmidt et al., "Segmentation of heart sound recordings by a
-%       duration-dependent hidden Markov model," Physiol. Meas., vol. 31,
-%       no. 4, pp. 513-29, Apr. 2010.
-%
-%       Developed by David Springer for comparison purposes in the paper:
-%       D. Springer et al., ?Logistic Regression-HSMM-based Heart Sound
-%       Segmentation,? IEEE Trans. Biomed. Eng., In Press, 2015.     
+%       Developed by David Springer, 2015.     
 %	
 %   LICENSE:    
 %   BSD 2-Clause License
@@ -75,7 +68,7 @@ function [despiked_signal] = schmidt_spike_removal(original_signal, fs)
 % (500 ms) -- 750 ms
 windowsize = round(fs*(3/4));
 
-%% Find any samples outside of a integer number of windows:
+%% Find any samples outside of an integer number of windows:
 trailingsamples = mod(length(original_signal), windowsize);
 
 %% Reshape the signal into a number of windows:

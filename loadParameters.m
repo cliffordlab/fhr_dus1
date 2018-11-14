@@ -23,8 +23,7 @@ function FHRparams = loadParameters()
 %   
 %   ORIGINAL SOURCE AND AUTHORS:     
 %       Written by Camilo E. Valderrama (cvalder@emory.com) on Nov, 08/2018.
-%       Dependent scripts written by various authors 
-%       (see functions for details)       
+%           
 %	
 %   LICENSE:    
 %   BSD 2-Clause License

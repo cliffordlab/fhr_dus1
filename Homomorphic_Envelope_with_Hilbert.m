@@ -44,10 +44,7 @@ function homomorphic_envelope = Homomorphic_Envelope_with_Hilbert(input_signal, 
 %	REPO:       
 %       https://github.com/cliffordlab/fhr_dus1
 %   ORIGINAL SOURCE AND AUTHORS:     
-%       This code was developed by David Springer for comparison purposes in the
-%       paper:
-%       D. Springer et al., Logistic Regression-HSMM-based Heart Sound 
-%       Segmentation, IEEE Trans. Biomed. Eng., In Press, 2015.    
+%       This code was developed by David Springer, 2015.    
 %	
 %   LICENSE:    
 %   BSD 2-Clause License

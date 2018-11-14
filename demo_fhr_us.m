@@ -185,7 +185,7 @@ for iRecordings=1:length(recordingsNames)
     %Suming up window differences
     sumDifferences = sum(agreeVector);
     
-    % If the difference are zero, output "exact match with gold standar output".
+    % If the differences are zero, output "exact match with gold standar output".
     %If the difference is less than 1bpm per minute of data analyzed, output is "Negligible difference with the gold standard (X BPM)"
     %If it's larger - "Caution - significant difference with gold standard output - please check data or code are correct".
     
